@@ -1,993 +1,790 @@
-<!DOCTYPE html> {% load static %}
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Zoho</title>
-    <link rel="stylesheet" href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/vendors/css/vendor.bundle.base.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-    <script src="{% static 'assets/vendors/js/vendor.bundle.base.js'%}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.5.0/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.5.0/js/bootstrap.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  
-   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.default.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
- 
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.2/dist/css/bootstrap.min.css">
 
 
+  <!-- Font Awesome CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
+
 <style>
-    .sidebar {
-        min-height: calc(150vh - 70px);
-        background: transparent;
-        font-weight: normal;
-        padding: 0;
-        width: 244px;
-        z-index: 11;
-        transition: width 0.25s ease, background 0.25s ease;
-        -webkit-transition: width 0.25s ease, background 0.25s ease;
-        -moz-transition: width 0.25s ease, background 0.25s ease;
-        -ms-transition: width 0.25s ease, background 0.25s ease;
+  @keyframes swing {
+    0% {
+      transform: rotate(0deg);
     }
-    
-    .content-wrapper {
-        background: transparent;
-        padding: 1.875rem 1.75rem;
-        width: 100%;
-        -webkit-flex-grow: 1;
-        flex-grow: 1;
+    10% {
+      transform: rotate(10deg);
     }
-    
-    @media (max-width:992px) {
-        #log {
-            max-width: 100px;
-            margin-top: 12px;
-            margin-left: 25px;
-            margin-right: 15px;
-        }
+    30% {
+      transform: rotate(0deg);
     }
-    
-    .sectionhtml {
-        background-color: #13151b;
-        /* min-height: 380px; */
-        /* Center and scale the image nicely */
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        /* Needed to position the navbar */
-        position: relative;
+    40% {
+      transform: rotate(-10deg);
     }
-    /* Position the navbar container inside the image */
-    
-    .container {
-        position: absolute;
-        margin: 20px;
-        width: auto;
-        /* background: url("/static/images/wallpaper1.jpg") 50% 0 no-repeat fixed; */
+    50% {
+      transform: rotate(0deg);
     }
-    
-    .navbar {
-        font-weight: normal;
-        background-color: transparent;
-        left: 244px;
-        transition: left 0.25s ease;
-        -webkit-transition: left 0.25s ease;
-        -moz-transition: left 0.25s ease;
-        -ms-transition: left 0.25s ease;
+    60% {
+      transform: rotate(5deg);
     }
-    
-    a {
-        text-decoration: none;
+    70% {
+      transform: rotate(0deg);
     }
-    
-    .modal-content {
-        position: relative;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        width: 100%;
-        pointer-events: auto;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        border-radius: 0.3rem;
-        outline: 0;
+    80% {
+      transform: rotate(-5deg);
     }
-    
-    .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 1050;
-        display: none;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        outline: 0;
+    100% {
+      transform: rotate(0deg);
     }
-    
-    .form-control {
-        display: block;
-        width: 100%;
-        height: calc(1.5em + 0.75rem + 2px);
-        padding: 0.375rem 0.75rem;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #495057;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid #ced4da;
-        border-radius: 0.25rem;
-        -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-        transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-        -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  }
+  
+  @keyframes sonar {
+    0% {
+      transform: scale(0.9);
+      opacity: 1;
     }
-    
-    @media (prefers-reduced-motion: reduce) {
-        .form-control {
-            -webkit-transition: none;
-            -o-transition: none;
-            transition: none;
-        }
+    100% {
+      transform: scale(2);
+      opacity: 0;
     }
-    
-    .form-control::-ms-expand {
-        background-color: transparent;
-        border: 0;
+  }
+  body {
+    font-size: 0.9rem;
+  }
+  .page-wrapper .sidebar-wrapper,
+  .sidebar-wrapper .sidebar-brand > a,
+  .sidebar-wrapper .sidebar-dropdown > a:after,
+  .sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu li a:before,
+  .sidebar-wrapper ul li a i,
+  .page-wrapper .page-content,
+  .sidebar-wrapper .sidebar-search input.search-menu,
+  .sidebar-wrapper .sidebar-search .input-group-text,
+  .sidebar-wrapper .sidebar-menu ul li a,
+  #show-sidebar,
+  #close-sidebar {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+  
+  /*----------------page-wrapper----------------*/
+  
+  .page-wrapper {
+    height: 100vh;
+  }
+  
+  .page-wrapper .theme {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    border-radius: 4px;
+    margin: 2px;
+  }
+  
+  .page-wrapper .theme.chiller-theme {
+    background: #1e2229;
+  }
+  
+  /*----------------toggeled sidebar----------------*/
+  
+  .page-wrapper.toggled .sidebar-wrapper {
+    left: 0px;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .page-wrapper.toggled .page-content {
+      padding-left: 300px;
     }
-    
-    .form-control:focus {
-        color: #495057;
-        background-color: #fff;
-        border-color: #80bdff;
-        outline: 0;
-        -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    }
-    
-    .form-control::-webkit-input-placeholder {
-        color: #6c757d;
-        opacity: 1;
-    }
-    
-    .form-control:-ms-input-placeholder {
-        color: #6c757d;
-        opacity: 1;
-    }
-    
-    .form-control::-ms-input-placeholder {
-        color: #6c757d;
-        opacity: 1;
-    }
-    
-    .form-control::placeholder {
-        color: #6c757d;
-        opacity: 1;
-    }
-    
-    .form-control:disabled,
-    .form-control[readonly] {
-        background-color: #e9ecef;
-        opacity: 1;
-    }
-    
-    select.form-control:focus::-ms-value {
-        color: #495057;
-        background-color: #fff;
-    }
-    
-    .form-row {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-        margin-right: -5px;
-        margin-left: -5px;
-    }
-    
-    .form-row>.col,
-    .form-row>[class*="col-"] {
-        padding-right: 5px;
-        padding-left: 5px;
-    }
-    
-    .containerprof {
-        width: 100%;
-        margin-left: 0px;
-        background-color: rgb(32, 35, 37);
-        border-radius: 20px;
-    }
-    
-    .save_btn {
-        background-color: rgb(218, 164, 48);
-        color: azure;
-        padding: 3;
-        width: 200px;
-        border-radius: 20px;
-    }
-    
-     ::-webkit-scrollbar {
-        width: 2px;
-    }
-    
-     ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-    
-     ::-webkit-scrollbar-thumb {
-        background: #888;
-    }
-    
-     ::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
-    
-    .form-inline {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: horizontal;
-        -webkit-box-direction: normal;
-        -ms-flex-flow: row wrap;
-        flex-flow: row wrap;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-    }
-    
-    .form-inline .form-check {
-        width: 100%;
-    }
-    
-    @media (min-width: 576px) {
-        .form-inline label {
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            margin-bottom: 0;
-        }
-        .form-inline .form-group {
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-flex: 0;
-            -ms-flex: 0 0 auto;
-            flex: 0 0 auto;
-            -webkit-box-orient: horizontal;
-            -webkit-box-direction: normal;
-            -ms-flex-flow: row wrap;
-            flex-flow: row wrap;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-            margin-bottom: 0;
-        }
-        .form-inline .form-control {
-            display: inline-block;
-            width: auto;
-            vertical-align: middle;
-        }
-        .form-inline .form-control-plaintext {
-            display: inline-block;
-        }
-        .form-inline .input-group,
-        .form-inline .custom-select {
-            width: auto;
-        }
-        .form-inline .form-check {
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            width: auto;
-            padding-left: 0;
-        }
-        .form-inline .form-check-input {
-            position: relative;
-            -ms-flex-negative: 0;
-            flex-shrink: 0;
-            margin-top: 0;
-            margin-right: 0.25rem;
-            margin-left: 0;
-        }
-        .form-inline .custom-control {
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-        }
-        .form-inline .custom-control-label {
-            margin-bottom: 0;
-        }
-    }
-    
-    .hidden {
-        display: none;
-    }
-    
-    .form-row {
-        display: flex;
-        align-items: center;
-    }
-    
-    .form-row label {
-        width: 100px;
-        padding-right: 10px;
-    }
-    
-    .form-row input[type="text"],
-    .form-row input[type="email"] {
-        flex: 1;
-    }
-    /* .item{
-  height:1200px;
-} 
-*/
-    
-    .menu-items {
-        margin-top: 1%;
-        margin-bottom: 1%;
-    }
-    
-    nav .icons i {
-        font-size: 1.5rem;
-        color: #fff;
-        cursor: pointer;
-        margin: 1.3rem;
-    }
-    
-    nav .icons i:hover {
-        color: var(--orange);
-    }
-    
-    nav .search-bar-container {
-        width: 60%;
-        position: absolute;
-        padding-top: 1.5rem;
-        border-top: .1rem solid rgba(255, 255, 255, .2);
-        display: flex;
-        align-items: center;
-        z-index: 1001;
-        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-    }
-    
-    nav .search-bar-container.active {
-        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    }
-    
-    nav .search-bar-container #search-bar {
-        width: 100%;
-        padding: .5rem;
-        text-transform: none;
-        color: #333;
-        font-size: 1.7rem;
-        border-radius: .5rem;
-    }
-    
-    nav .search-bar-container label {
-        color: #fff;
-        cursor: pointer;
-        font-size: 3rem;
-        margin-left: 1.5rem;
-    }
-    
-    nav .search-bar-container label:hover {
-        color: var(--orange);
-    }
-    
-    .icons {
-        position: relative;
-    }
-    /* Show dropdown on hover */
-    
-    .icons:hover .dropdown-content {
-        display: block;
-    }
-    
-    nav.navbar {
-        box-shadow: 0 2px 4px rgba(216, 213, 213, 0.3);
-        /* Add your desired shadow properties here */
-    }
+  }
+  /*----------------show sidebar button----------------*/
+  #show-sidebar {
+    left: 0;
+    top: 10px;
+    border-radius: 0 4px 4px 0px;
+    width: 35px;
+    transition-delay: 0.3s;
+    position: absolute;
+    z-index: 9999; /* Ensure it's above other elements */
+  }
+  .page-wrapper.toggled #show-sidebar {
+    left: -40px;
+  }
+  /*----------------sidebar-wrapper----------------*/
+  
+  .sidebar-wrapper {
+    width: 280px;
+    height: 100%;
+    max-height: 100%;
+    position: fixed;
+    top: 0;
+    left: -300px;
+    z-index: 999;
+  }
+  
+  .sidebar-wrapper ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar-wrapper a {
+    text-decoration: none;
+  }
+  
+  /*----------------sidebar-content----------------*/
+  
+  .sidebar-content {
+    max-height: calc(100% - 30px);
+    height: calc(100% - 30px);
+    overflow-y: auto;
+    position: relative;
+  }
+  
+  .sidebar-content.desktop {
+    overflow-y: hidden;
+  }
+  
+  /*--------------------sidebar-brand----------------------*/
+  
+  .sidebar-wrapper .sidebar-brand {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sidebar-wrapper .sidebar-brand > a {
+    text-transform: uppercase;
+    font-weight: bold;
+    flex-grow: 1;
+  }
+  
+  .sidebar-wrapper .sidebar-brand #close-sidebar {
+    cursor: pointer;
+    font-size: 20px;
+  }
+  /*--------------------sidebar-header----------------------*/
+  
+  .sidebar-wrapper .sidebar-header {
+    padding: 20px;
+    overflow: hidden;
+  }
+  
+  .sidebar-wrapper .sidebar-header .user-pic {
+    float: left;
+    width: 60px;
+    padding: 2px;
+    border-radius: 12px;
+    margin-right: 15px;
+    overflow: hidden;
+  }
+  
+  .sidebar-wrapper .sidebar-header .user-pic img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .sidebar-wrapper .sidebar-header .user-info {
+    float: left;
+  }
+  
+  .sidebar-wrapper .sidebar-header .user-info > span {
+    display: block;
+  }
+  
+  .sidebar-wrapper .sidebar-header .user-info .user-role {
+    font-size: 12px;
+  }
+  
+  .sidebar-wrapper .sidebar-header .user-info .user-status {
+    font-size: 11px;
+    margin-top: 4px;
+  }
+  
+  .sidebar-wrapper .sidebar-header .user-info .user-status i {
+    font-size: 8px;
+    margin-right: 4px;
+    color: #5cb85c;
+  }
+  
+  /*-----------------------sidebar-search------------------------*/
+  
+  .sidebar-wrapper .sidebar-search > div {
+    padding: 10px 20px;
+  }
+  
+  /*----------------------sidebar-menu-------------------------*/
+  
+  .sidebar-wrapper .sidebar-menu {
+    padding-bottom: 10px;
+  }
+  
+  .sidebar-wrapper .sidebar-menu .header-menu span {
+    font-weight: bold;
+    font-size: 14px;
+    padding: 15px 20px 5px 20px;
+    display: inline-block;
+  }
+  
+  .sidebar-wrapper .sidebar-menu ul li a {
+    display: inline-block;
+    width: 100%;
+    text-decoration: none;
+    position: relative;
+    padding: 8px 30px 8px 20px;
+  }
+  
+  .sidebar-wrapper .sidebar-menu ul li a i {
+    margin-right: 10px;
+    font-size: 12px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 4px;
+  }
+  
+  .sidebar-wrapper .sidebar-menu ul li a:hover > i::before {
+    display: inline-block;
+    animation: swing ease-in-out 0.5s 1 alternate;
+  }
+  
+  .sidebar-wrapper .sidebar-menu .sidebar-dropdown > a:after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f105";
+    font-style: normal;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    background: 0 0;
+    position: absolute;
+    right: 15px;
+    top: 14px;
+  }
+  
+  .sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu ul {
+    padding: 5px 0;
+  }
+  
+  .sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu li {
+    padding-left: 25px;
+    font-size: 13px;
+  }
+  
+  .sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu li a:before {
+    content: "\f111";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 400;
+    font-style: normal;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-right: 10px;
+    font-size: 8px;
+  }
+  
+  .sidebar-wrapper .sidebar-menu ul li a span.label,
+  .sidebar-wrapper .sidebar-menu ul li a span.badge {
+    float: right;
+    margin-top: 8px;
+    margin-left: 5px;
+  }
+  
+  .sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu li a .badge,
+  .sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu li a .label {
+    float: right;
+    margin-top: 0px;
+  }
+  
+  .sidebar-wrapper .sidebar-menu .sidebar-submenu {
+    display: none;
+  }
+  
+  .sidebar-wrapper .sidebar-menu .sidebar-dropdown.active > a:after {
+    transform: rotate(90deg);
+    right: 17px;
+  }
+  
+  /*--------------------------side-footer------------------------------*/
+  
+  .sidebar-footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+  }
+  
+  .sidebar-footer > a {
+    flex-grow: 1;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+  }
+  
+  .sidebar-footer > a .notification {
+    position: absolute;
+    top: 0;
+  }
+  
+  .badge-sonar {
+    display: inline-block;
+    background: #980303;
+    border-radius: 50%;
+    height: 8px;
+    width: 8px;
+    position: absolute;
+    top: 0;
+  }
+  
+  .badge-sonar:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 2px solid #980303;
+    opacity: 0;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    animation: sonar 1.5s infinite;
+  }
+  
+  /*--------------------------page-content-----------------------------*/
+  
+  .page-wrapper .page-content {
+    display: inline-block;
+    width: 100%;
+    padding-left: 0px;
+    padding-top: 0px;
+  }
+  
+  .page-wrapper .page-content {
+    overflow-x: hidden;
+  }
+  
+  /*------scroll bar---------------------*/
+  
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 7px;
+  }
+  ::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #525965;
+    border: 0px none #ffffff;
+    border-radius: 0px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #525965;
+  }
+  ::-webkit-scrollbar-thumb:active {
+    background: #525965;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    border: 0px none #ffffff;
+    border-radius: 50px;
+  }
+  ::-webkit-scrollbar-track:hover {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-track:active {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  
+  
+  /*-----------------------------chiller-theme-------------------------------------------------*/
+  
+  .chiller-theme .sidebar-wrapper {
+      background: #31353D;
+  }
+  
+  .chiller-theme .sidebar-wrapper .sidebar-header,
+  .chiller-theme .sidebar-wrapper .sidebar-search,
+  .chiller-theme .sidebar-wrapper .sidebar-menu {
+      border-top: 1px solid #3a3f48;
+  }
+  
+  .chiller-theme .sidebar-wrapper .sidebar-search input.search-menu,
+  .chiller-theme .sidebar-wrapper .sidebar-search .input-group-text {
+      border-color: transparent;
+      box-shadow: none;
+  }
+  
+  .chiller-theme .sidebar-wrapper .sidebar-header .user-info .user-role,
+  .chiller-theme .sidebar-wrapper .sidebar-header .user-info .user-status,
+  .chiller-theme .sidebar-wrapper .sidebar-search input.search-menu,
+  .chiller-theme .sidebar-wrapper .sidebar-search .input-group-text,
+  .chiller-theme .sidebar-wrapper .sidebar-brand>a,
+  .chiller-theme .sidebar-wrapper .sidebar-menu ul li a,
+  .chiller-theme .sidebar-footer>a {
+      color: #faf9f6;
+  }
+  
+  .chiller-theme .sidebar-wrapper .sidebar-menu ul li:hover>a,
+  .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown.active>a,
+  .chiller-theme .sidebar-wrapper .sidebar-header .user-info,
+  .chiller-theme .sidebar-wrapper .sidebar-brand>a:hover,
+  .chiller-theme .sidebar-footer>a:hover i {
+      color: #faf9f6;
+  }
+  
+  .page-wrapper.chiller-theme.toggled #close-sidebar {
+      color: black;
+  }
+  
+  .page-wrapper.chiller-theme.toggled #close-sidebar:hover {
+      color: #ffffff;
+  }
+  
+  .chiller-theme .sidebar-wrapper ul li:hover a i,
+  .chiller-theme .sidebar-wrapper .sidebar-dropdown .sidebar-submenu li a:hover:before,
+  .chiller-theme .sidebar-wrapper .sidebar-search input.search-menu:focus+span,
+  .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown.active a i {
+      color: #16c7ff;
+      text-shadow:0px 0px 10px rgba(22, 199, 255, 0.5);
+  }
+  
+  .chiller-theme .sidebar-wrapper .sidebar-menu ul li a i,
+  .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown div,
+  .chiller-theme .sidebar-wrapper .sidebar-search input.search-menu,
+  .chiller-theme .sidebar-wrapper .sidebar-search .input-group-text {
+      background: #3a3f48;
+  }
+  
+  .chiller-theme .sidebar-wrapper .sidebar-menu .header-menu span {
+      color: #6c7b88;
+  }
+  
+  .chiller-theme .sidebar-footer {
+      background: #3a3f48;
+      box-shadow: 0px -1px 5px #282c33;
+      border-top: 1px solid #464a52;
+  }
+  
+  .chiller-theme .sidebar-footer>a:first-child {
+      border-left: none;
+  }
+  
+  .chiller-theme .sidebar-footer>a:last-child {
+      border-right: none;
+  }
+
+
+  .sidebar-dropdown > a {
+    position: relative;
+  }
+
+  .sidebar-dropdown ul li a i.fa-plus {
+      position: absolute;
+      right: 10px; /* Adjust this value as needed to control the right alignment */
+  }
+
+  /* Apply custom styles to the navbar */
+  .navbar {
+      background-color: #333; /* Set the background color */
+      border-bottom: 2px solid #555; /* Add a border at the bottom */
+      height: 4.5rem;
+  }
+
+  /* Style the navbar buttons */
+  .navbar button {
+      margin-right: 10px; /* Add some spacing between buttons */
+  }
+
+  #addsale{
+    margin-left: 60rem;
+    background: #ff2747;
+    color: white;
+    border-radius: 20px
+  }
+
+  #addproduct{
+    background: #0050ff;
+    color: white;
+    border-radius: 20px
+  }
+
+  #addmore{
+    background: white;
+    color: #0050ff;
+    border-radius: 20px
+  }
+
 </style>
+<body>
 
-<section class="sectionhtml">
+  <div class="page-wrapper chiller-theme toggled">
+    <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+      <i class="fas fa-bars"></i>
+    </a>
+    <nav id="sidebar" class="sidebar-wrapper" style="background:  #455a81;">
+      <div class="sidebar-content">
+        <div class="sidebar-header">
+          <div class="user-pic">
+            {% if company.profile_pic %}
+              <img class="img-xs rounded-circle" src="{{ company.profile_pic.url }}" alt="">
+            {% else %}
+              <img class="img-xs rounded-circle" src="" class="rounded-circle">
+            {% endif %}
+          </div>
+          <div class="user-info">
+            <span class="user-name">
+              {% if company.company_name != None %}
+                <b>{{ company.company_name }}</b>
+              {% else %}
+                <b>Add Company</b>
+              {% endif %}
+            </span>
+          </div>
+          <div id="close-sidebar" style="float: right;">
+            <i class="fas fa-times"></i>
+          </div>
+        </div>
 
-    <body>
-        <div class="container-scroller">
+        <!-- sidebar-search  -->
+        <div class="sidebar-menu">
+          <ul>
+            <li class="header-menu">
+              <span><b>General</b></span>
+            </li>
+            <li class="sidebar">
+              <a href="#">
+                <i class="fa fa-home"></i>
+                <span><b>Home</b></span>
+              </a>
+            </li>
 
-            <!-- partial:partials/_sidebar.html -->
-            <nav class="sidebar sidebar-offcanvas" id="sidebar">
-                <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top" style="background-color: transparent;">
-                    <a class="sidebar-brand brand-logo text-light text-decoration-none">
-                        <p style="color: white; font-size: 35px;margin-top: 3vh;">Zoho </p>
+            <li class="sidebar">
+              <a href="#">
+                <i class="fa fa-users"></i>
+                  <span><b>Parties</b></span>
+                <i class="fa fa-plus" style="vertical-align: middle; float: right;"></i>
+              </a>
+            </li>
+          
+          
+            <li class="sidebar">
+              <a href="#">
+                <i class="fa fa-th"></i>
+                <span><b>Items</b></span>
+                <i class="fa fa-plus" style="vertical-align: middle; float: right;"></i>
+              </a>
+            </li>
+            
+            <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-tachometer-alt"></i>
+                <span><b>Sale</b></span>
+              </a>
+              <div class="sidebar-submenu">
+                <ul>
+                  <li>
+                    <a href="#"><b>Sale Invoices</b>
+                      <i class="fa fa-plus"></i>
                     </a>
-                    <a class="sidebar-brand brand-logo-mini text-light text-decoration-none" style="background-color: transparent;">
-                        <p style="color: white; opacity: 1; font-size: 35px;margin-top: 3vh;">ZD</p>
+                  </li>
+                  <li>
+                    <a href="#"><b>Estimate/ Quotation</b>
+                      <i class="fa fa-plus"></i>
                     </a>
-                </div>
-                <ul class="nav" style="position: fixed;">
-                    <li class="nav-item profile">
-                        <div class="profile-desc">
-                            <div class="profile-pic">
-                                <div class="count-indicator">
-
-                                    <span class="count bg-success"></span>
-                                </div>
-                                <div class="profile-name">
-
-
-                                </div>
-                            </div>
-
-
-
-
-                            <li class="nav-item menu-items ">
-                                <a class="nav-link" href="">
-                                    <span class="menu-icon">
-              <i class="mdi mdi-home"></i>
-            </span>
-                                    <span class="menu-title text-white">Home</span>
-                                </a>
-                            </li>
-
-                            <li class="nav-item menu-items dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    <span class="menu-icon">
-              <i class="mdi mdi-sitemap"></i>
-            </span>
-                                    <span class="menu-title text-white">Items</span>
-
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #fafbfc" href="">Items</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #f7f8f8" href="">Price List</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-
-
-                                    </li>
-                                </ul>
-
-                            </li>
-
-                            <li class="nav-item menu-items dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    <span class="menu-icon">
-              <i class="mdi mdi-sitemap"></i>
-            </span>
-                                    <span class="menu-title text-white">Banking</span>
-
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #f7fbff" href="">Offline Banking</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-
-
-                                    </li>
-                                </ul>
-
-                            </li>
-
-
-
-
-                            <li class="nav-item menu-items dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    <span class="menu-icon">
-              <i class="mdi mdi-cart-outline "></i>
-            </span>
-                                    <span class="menu-title text-white">Sales</span>
-
-                                </a>
-                                <ul class="dropdown-menu ">
-                                    <li>
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #f6f7f8" href="">Customers</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #ffffff" href="">Estimates</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                        <div class="dropdown-item ">
-                                            <a class="d-inline-block" style="color: #fdfeff" href="">Retainer Invoices</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #fafcff" href="">Sales Orders</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #fbfdff" href="">Delivery Challans</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #ffffff" href="">Invoices</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #ffffff" href="">Credit Notes</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #ffffff" href="">Recurring Invoice</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                    </li>
-                                </ul>
-
-                            </li>
-
-
-                            <li class="nav-item menu-items dropdown">
-                                <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    <span class="menu-icon">
-              <i class="mdi mdi-basket"></i>
-            </span>
-                                    <span class="menu-title text-white">Purchases</span>
-
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #ffffff" href="">Vendors</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #ffffff" href="">Expenses</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #ffffff" href="">Recurring Expenses</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #ffffff" href="">Purchase Orders</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #ffffff" href="">Payment Made</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #ffffff" href="">Bills</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #ffffff" href="">Recurring Bills</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-
-                            </li>
-
-
-                            <li class="nav-item menu-items dropdown">
-                                <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    <span class="menu-icon">
-              <i class="mdi mdi-clock"></i>
-            </span>
-                                    <span class="menu-title  text-white">Time Tracking</span>
-
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #ffffff" href="">Projects</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                    </li>
-                                </ul>
-
-                            </li>
-
-
-                            <li class="nav-item menu-items dropdown">
-                                <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    <span class="menu-icon">
-              <i class="mdi mdi-account"></i>
-            </span>
-                                    <span class="menu-title  text-white">Accountant</span>
-
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #ffffff" href="">Chart Of Accounts</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                    </li>
-                                </ul>
-
-                            </li>
-
-
-                            <li class="nav-item menu-items">
-                                <a class="nav-link" href="">
-                                    <span class="menu-icon">
-              <i class="mdi mdi-calendar-week"></i>
-            </span>
-                                    <span class="menu-title text-white">Reports</span>
-                                </a>
-                            </li>
-
-
-                            <li class="nav-item menu-items">
-                                <a class="nav-link" href="#">
-                                    <span class="menu-icon">
-              <i class="mdi mdi-file-outline"></i>
-            </span>
-                                    <span class="menu-title text-white">Documents</span>
-                                </a>
-                            </li>
-
-
-                            <li class="nav-item menu-items dropdown">
-                                <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    <span class="menu-icon">
-              <i class="mdi mdi-account"></i>
-            </span>
-                                    <span class="menu-title  text-white">Payroll</span>
-
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <div class="dropdown-item">
-                                            <a class="d-inline-block" style="color: #ffffff" href="">Employees</a>
-                                            <a class="d-inline-block" style="color: #000000;margin-left: 2px;" href="">
-                                                <span class="icon bg-light rounded-circle" style="text-align: right; width: 25px;">
-                    <i class="mdi mdi-plus"></i>
-                  </span>
-                                            </a>
-                                        </div>
-
-                                    </li>
-                                </ul>
-
-                            </li>
-
+                  </li>
+                  <li>
+                    <a href="#"><b>Payment In</b>
+                      <i class="fa fa-plus"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#"><b>Sale Order</b>
+                      <i class="fa fa-plus"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#"><b>Delivery Challan</b>
+                      <i class="fa fa-plus"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#"><b>Sale Return/ Cr. Note</b>
+                      <i class="fa fa-plus"></i>
+                    </a>
+                  </li>
                 </ul>
-            </nav>
+              </div>
+            </li>
+            <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-shopping-cart"></i>
+                <span><b>Purchase</b></span>
+              </a>
+              <div class="sidebar-submenu">
+                <ul>
+                  <li>
+                    <a href="#"><b>Purchase Bills</b>
+                      <i class="fa fa-plus"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#"><b>Payment Out</b>
+                      <i class="fa fa-plus"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#"><b>Purchase Order</b>
+                      <i class="fa fa-plus"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#"><b>Purchase Return/ Dr. Note</b>
+                      <i class="fa fa-plus"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="sidebar">
+              <a href="#">
+                <i class="fa fa-wallet"></i>
+                <span><b>Expenses</b></span>
+                <i class="fa fa-plus" style="vertical-align: middle; float: right;"></i>
+              </a>
+            </li>
 
+            <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-landmark"></i>
+                <span><b>Cash & Bank</b></span>
+              </a>
+              <div class="sidebar-submenu">
+                <ul>
+                  <li>
+                    <a href="#"><b>Bank Accounts</b>
+                      <i class="fa fa-plus"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#"><b>Cash In Hand</b>
+                      <i class="fa fa-plus"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#"><b>Cheques</b></a>
+                  </li>
+                  <li>
+                    <a href="#"><b>Loan Accounts</b>
+                      <i class="fa fa-plus"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
 
+            <li class="sidebar">
+              <a href="#">
+                <i class="fa fa-chart-line"></i>
+                <span><b>Reports</b></span>
+                <i class="fa fa-plus" style="vertical-align: middle; float: right;"></i>
+              </a>
+            </li>
 
-            <div class="container-fluid page-body-wrapper">
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-                <nav class="navbar p-0 fixed-top d-flex flex-row" style="z-index: 9999;">
-                    <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center" style="background-color: transparent;">
-                        <a class="sidebar-brand brand-logo-mini text-dark text-decoration-none " href="index.html">
-                            <p style="color: white; opacity: 1; font-size: 35px;margin-top: 3vh;padding-left: 100px;">Zoho</p>
-                        </a>
-                    </div>
-                    <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-                        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-            <span class="mdi mdi-menu"></span>
-          </button>
+    
+    <nav class="navbar navbar-expand-lg navbar-light" style="background:  #455a81;">
+      <div class="container-fluid">
+        <button class="navbar-toggler ml-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                        <ul class="navbar-nav">
-                            <div class="search-bar-container" id="search-container">
-                                <input type="text" autocomplete="off" id="myInput" onkeyup="filter(this);" class="form-control text-dark" placeholder="search..." />
-                                <div class="input-group-append"></div>
-                            </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav"> <!-- Use ml-auto to push the buttons to the right -->
+            <li class="nav-item">
+              <button class="btn me-2" id="addsale" type="button">
+                <i class="fa fa-plus"></i>
+                Add Sale
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="btn me-2" id="addproduct" type="button">
+                <i class="fa fa-plus"></i>
+                Add Purchase
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="btn me-2" id="addmore" type="button">
+                <i class="fa fa-plus"></i>
+                Add More
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
+    <main class="page-content">
+      
+      {% block content %}{% endblock content %}
+  
+    </main>
+  </div>
 
-                        </ul>
-                        <div class="mt-5" id="myDIV" style="position:absolute;width:550px;top:50%;">
-                            <ul id="myList" class="one" style="background-color: #131414;list-style: none;">
-                                <li><a class="text-white" href="">Dashboard</a></li>
-
-
-
-                            </ul>
-                        </div>
-
-
-                        <script>
-                            $(document).ready(function() {
-                                // Initially hide the search bar container
-                                $("#search-container").hide();
-
-                                // When the search icon is clicked
-                                $("#search-btn").click(function() {
-                                    // Toggle the active state of the search bar container
-                                    $("#search-container").toggleClass("active");
-
-                                    // Clear the input box value
-                                    $("#myInput").val('');
-
-                                    // If the search bar container is active, show it; otherwise, hide it and clear the input box value
-                                    if ($("#search-container").hasClass("active")) {
-                                        $("#search-container").show();
-                                    } else {
-                                        $("#search-container").hide();
-                                        $("#myList li").hide();
-                                    }
-                                });
-
-                                $("#myList li").hide();
-
-                                $("#myInput").on("keyup", function() {
-                                    var value = $(this).val().toLowerCase();
-                                    if (value !== '') {
-                                        $("#myList li").filter(function() {
-                                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-                                        });
-                                    } else {
-                                        $("#myList li").hide();
-                                    }
-                                });
-                            });
-                        </script>
-                        <ul class="navbar-nav navbar-nav-right">
-                            <li>
-                                <div class="icons">
-                                    <i class="fas fa-search" id="search-btn"></i>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="icons">
-                                    <i class="far fa-bell" style="font-size:30px;"></i>
-
-                                </div>
-                            </li>
-                            <li>
-                                <div class="icons">
-                                    <i class="fa fa-gear" style="font-size:30px;"></i>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
-                                    <div class="navbar-profile">
-                                        {% if company.profile_pic %}
-                                        <img class="img-xs rounded-circle" src="{{ company.profile_pic.url }}" alt=""> {% else %}
-                                        <img class="img-xs rounded-circle" src="{% static 'images/default.png' %}" class="rounded-circle"> {% endif %}
-
-
-
-
-                                        <p class="mb-0 d-none d-sm-block navbar-profile-name" style="color: white;">
-
-                                            {% if company.company_name != None %} {{ company.company_name }} {% else %} Add Company {% endif %}
-                                        </p>
-
-
-                                        <i class="mdi mdi-menu-down d-none d-sm-block"></i>
-                                    </div>
-                                </a>
-                                <div id="log" class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list " aria-labelledby="profileDropdown" style="background-color: transparent; z-index: 9999;">
-
-                                    <div class="dropdown-divider"></div>
-                                    <div class="dropdown-divider"></div>
-                                    <a href="" class="dropdown-item preview-item">
-                                        <div class="preview-thumbnail">
-                                            <div class="preview-icon bg-light rounded-circle">
-                                                <i class="mdi mdi-view-dashboard text-success"></i>
-                                            </div>
-                                        </div>
-
-                                        <div class="preview-item-content">
-                                            <p class="preview-subject mb-1 " style="color: white;">Dashboard</p>
-                                        </div>
-                                    </a>
-                                    <a href="" class="dropdown-item preview-item">
-                                        <div class="preview-thumbnail">
-                                            <div class="preview-icon bg-light rounded-circle">
-                                                <i class="mdi mdi-account text-primary"></i>
-                                            </div>
-                                        </div>
-
-                                        <div class="preview-item-content">
-                                            <p class="preview-subject mb-1">Profile</p>
-                                        </div>
-                                    </a>
-                                    <a href="" class="dropdown-item preview-item">
-                                        <div class="preview-thumbnail">
-                                            <div class="preview-icon bg-light rounded-circle">
-                                                <i class="mdi mdi-logout text-danger"></i>
-                                            </div>
-                                        </div>
-
-                                        <div class="preview-item-content">
-                                            <p class="preview-subject mb-1">Log out</p>
-                                        </div>
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                </div>
-                            </li>
-                        </ul>
-                        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-            <span class="mdi mdi-format-line-spacing"></span>
-          </button>
-                    </div>
-                </nav>
-
-                <div class="main-panel">
-                    <div class="content-wrapper">
-                        {%block content%} {%endblock%}
-                    </div>
-                    <div>
-
-                    </div>
-
-                </div>
-
-                <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
-                <script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
-
-                <script src="{% static 'assets/vendors/chart.js/Chart.min.js' %}"></script>
-                <script src="{% static 'assets/vendors/progressbar.js/progressbar.min.js' %}"></script>
-                <script src="{% static 'assets/vendors/jvectormap/jquery-jvectormap.min.js' %}"></script>
-                <script src="{% static 'assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js' %}"></script>
-                <script src="{% static 'assets/vendors/owl-carousel-2/owl.carousel.min.js' %}"></script>
-                <script src="{% static 'assets/js/jquery.cookie.js" type="text/javascript' %}"></script>
-                <script src="{% static 'assets/js/off-canvas.js' %}"></script>
-                <script src="{% static 'assets/js/hoverable-collapse.js' %}"></script>
-                <script src="{% static 'assets/js/misc.js' %}"></script>
-                <script src="{% static 'assets/js/settings.js' %}"></script>
-                <script src="{% static 'assets/js/todolist.js' %}"></script>
-                <script src="{% static 'assets/js/dashboard.js' %}"></script>
-
-                <script src="{% static 'assets/vendors/js/vendor.bundle.base.js'%}"></script>
- 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
-
-               <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-
-                
-    </body>
-</section>
-
+  <!-- Bootstrap JavaScript (with Popper.js and jQuery) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.2/dist/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@2.11.6/dist/umd/popper.min.js"></script>
+  <script>
+      $(document).ready(function() {
+          $(".sidebar-dropdown > a").click(function() {
+              $(".sidebar-submenu").slideUp(200);
+              if ($(this).parent().hasClass("active")) {
+                  $(".sidebar-dropdown").removeClass("active");
+                  $(this).parent().removeClass("active");
+              } else {
+                  $(".sidebar-dropdown").removeClass("active");
+                  $(this).next(".sidebar-submenu").slideDown(200);
+                  $(this).parent().addClass("active");
+              }
+          });
+  
+          $("#close-sidebar").click(function() {
+              $(".page-wrapper").removeClass("toggled");
+          });
+  
+          $("#show-sidebar").click(function() {
+              $(".page-wrapper").addClass("toggled");
+          });
+      });
+  </script>
+  
+  
+</body>
 </html>
