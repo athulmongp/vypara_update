@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User, auth
+from django.utils.text import capfirst
 from django.contrib import messages
 from . models import *
 
@@ -23,12 +24,10 @@ def register(request):
     
     if passw == c_passw:
       if User.objects.filter(username = user_name).exists():
-        # messages.info(request, 'Sorry, Username already exists')
-        # return redirect('register')
+        messages.info(request, 'Sorry, Username already exists')
         return redirect('log')
-      elif Customer.objects.filter(cust_mobile = mobile).exists():
-        # messages.info(request, 'Sorry, Mobile Number already exists')
-        # return redirect('register')
+      elif company_details.objects.filter(contact_number = mobile).exists():
+        messages.info(request, 'Sorry, Mobile Number already exists')
         return redirect('log')
 
       elif not User.objects.filter(email = email_id).exists():
@@ -41,13 +40,13 @@ def register(request):
         user_data.save()
         
         data = User.objects.get(id = user_data.id)
-        cust_data = Customer(cust_mobile = mobile,
-                             cust_user = data)
+        cust_data = company_details(contact_number = mobile,
+                             user = data)
         cust_data.save()
+        messages.success(request, 'Welcome'+ '' + data.first_name +' '+data.last_name + '' +'Please Login')
         return redirect('log')
       else:
-        # messages.info(request, 'Sorry, Email already exists')
-        # return redirect('register')
+        messages.info(request, 'Sorry, Email already exists')
         return redirect('log')
       
       
@@ -68,6 +67,52 @@ def login(request):
 def homepage(request):
   return render(request, 'homepage.html')
 
+# @login_required(login_url='login')
+def logout(request):
+    auth.logout(request)
+    return redirect('/')
+
+def view_profile(request):
+  company =  company_details.objects.get(user = request.user)
+  context = {
+              'company' : company
+          }
+  return render(request,'profile.html',context)
+  
+def edit_profile(request,pk):
+  company = company_details.objects.get(id = pk)
+  user1 = User.objects.get(id = company.user_id)
+
+  if request.method == "POST":
+
+      user1.first_name = capfirst(request.POST.get('f_name'))
+      user1.last_name  = capfirst(request.POST.get('l_name'))
+      user1.email = request.POST.get('email')
+      company.contact_number = request.POST.get('cnum')
+      company.address = capfirst(request.POST.get('ards'))
+      company.company_name = request.POST.get('comp_name')
+      company.company_email = request.POST.get('comp_email')
+      company.city = request.POST.get('city')
+      company.state = request.POST.get('state')
+      company.country = request.POST.get('country')
+      company.pincode = request.POST.get('pinc')
+      company.gst_num = request.POST.get('gst')
+      company.pan_num = request.POST.get('pan')
+      company.business_name = request.POST.get('bname')
+      company.company_type = request.POST.get('comp_type')
+      if len(request.FILES)!=0 :
+          company.profile_pic = request.FILES.get('file')
+
+      company.save()
+      user1.save()
+      return redirect('view_profile')
+
+  context = {
+      'company' : company,
+      'user1' : user1,
+  }
+  
+  return render(request,'edit_profile.html',context)
     
     
     

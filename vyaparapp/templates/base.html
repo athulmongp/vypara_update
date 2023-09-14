@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -520,13 +522,13 @@
 
   #addsale{
     margin-left: 46.5rem;
-    background: #ff2747;
+    background: #990012;
     color: white;
     border-radius: 20px
   }
 
   #addproduct{
-    background: #0050ff;
+    background: #0000a5;
     color: white;
     border-radius: 20px
   }
@@ -544,7 +546,7 @@
     font-size: 16px;
     border: none;
     cursor: pointer;
-    margin-left: 5rem;
+    margin-left: 2.5rem;
   }
 
   /* Style the dropdown content */
@@ -594,12 +596,16 @@
     <nav id="sidebar" class="sidebar-wrapper" style="background: #455a81;">
       <div class="sidebar-content">
         <div class="sidebar-header">
-         <h1 class="text-center" style="font-size: 18px; color: white;"><b>VYAPAR</b></h1>
+        <h1 class="text-center" style="font-size: 18px; color: white;">
+          <a href="{% url "homepage" %}">
+            <b class="text-white">VYAPAR</b>
+          </a>
+        </h1>
 
-          <div id="close-sidebar" style="float: right; margin-top: -2rem;">
+          {% comment %} <div id="close-sidebar" style="float: right; margin-top: -2rem;">
             <i class="fas fa-angle-double-left"></i>
-            {% comment %} <i class="fas fa-times"></i> {% endcomment %}
-          </div>
+            <i class="fas fa-times"></i>
+          </div> {% endcomment %}
           <!-- Add a button to partially close the sidebar -->
           {% comment %} <div id="partial-close-sidebar" class="btn btn-sm btn-dark" style="float: right; margin-top: -2rem;">
             <i class="fas fa-angle-double-left"></i>
@@ -678,6 +684,7 @@
                 </ul>
               </div>
             </li>
+            
             <li class="sidebar-dropdown">
               <a href="#">
                 <i class="fa fa-shopping-cart"></i>
@@ -708,6 +715,7 @@
                 </ul>
               </div>
             </li>
+
             <li class="sidebar">
               <a href="#">
                 <i class="fa fa-wallet"></i>
@@ -786,18 +794,18 @@
               </button>
             </li>
           </ul>
-          <div class="sidebar-header" style="margin-left: 12.5rem;">
-            <div class="user-pic">
+          <div class="sidebar-header" style="margin-left: 11rem;">
+            <div class="user-pic" style="height: 5px;">
               {% if company.profile_pic %}
-                <img class="img-xs rounded-circle" src="{{ company.profile_pic.url }}" alt="">
+                <img class="img-xs rounded-circle" style="height: 35px;" src="{{ company.profile_pic.url }}" alt="">
               {% else %}
-                <img class="img-xs rounded-circle" src="" class="rounded-circle">
+                <img class="img-xs rounded-circle" style="height: 35px;" src="{% static 'images/default.jpg' %}" class="rounded-circle">
               {% endif %}
             </div>
-            <div class="user-info">
+            <div class="user-info" style="margin-left: 3rem;">
               <span class="user-name">
                 {% if company.company_name != None %}
-                  <b>{{ company.company_name }}</b>
+                  <b class="text-white">{{ company.company_name }}</b>
                 {% else %}
                   <b class="text-white">Add Company</b>
                 {% endif %}
@@ -810,8 +818,8 @@
                 </button>
                 <div class="dropdown-content">
                   <a href="#">Dashboard</a>
-                  <a href="#">Profile</a>
-                  <a href="#">Logout</a>
+                  <a href="{% url 'view_profile' %}">Profile</a>
+                  <a href="{% url 'logout' %}">Logout</a>
                 </div>
               </div>
             </div>
@@ -820,7 +828,7 @@
       </div>
     </nav>
 
-    <main class="page-content">
+    <main class="page-content" style="background-color: #E1E8EE;">
       
       {% block content %}{% endblock content %}
   
