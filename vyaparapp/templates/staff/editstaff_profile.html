@@ -1,6 +1,6 @@
 <!-- create by athul -->
 
-{% extends 'staff/staffbase.html' %}
+{% extends 'company/src/html/base.html' %}
 
 {% block content %}
 {% load static %}
@@ -24,9 +24,9 @@
         <div class="container-fluid">
             <div class="container mt-4 p-5" style="background-color: white;width: 70%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                 <h2 class="h2 text-center"><b>EDIT PROFILE</b></h2>
-                <form action="{% url 'editstaff_profile_action' staff.id %}" method="post" enctype="multipart/form-data">
+                <form action="{% url 'editstaff_profile_action' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                <center>
+                <center>  
                     {% if staff.img %}
                 <img   class="img-thumbnail" src="{{ staff.img.url }}" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" alt="">
                 {% else %}

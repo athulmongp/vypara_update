@@ -314,99 +314,13 @@ def add_payment_terms(request):
 
 
 
-def companyreport(request):
-  com =  company.objects.get(user = request.user)
-  allmodules= modules_list.objects.get(company=com.id,status='New')
-  return render(request,'company/companyreport.html',{'company':com,'allmodules':allmodules})  
+ 
 
 
 
-def editcompanyprofile(request):
-  com =  company.objects.get(user = request.user)
-  allmodules= modules_list.objects.get(company=com.id,status='New')
-  terms=payment_terms.objects.all()
-  return render(request,'company/editcompanyprofile.html',{'company':com,'allmodules':allmodules,'terms':terms})
-
-def editcompanyprofile_action(request):
-  com =  company.objects.get(user = request.user)
-  if request.method == 'POST':
-    com.company_name = request.POST['cname']
-    com.user.email = request.POST['email']
-    com.contact = request.POST['ph']
-    com.address = request.POST['address']
-    com.city = request.POST['city']
-    com.state = request.POST['state']
-    com.country = request.POST['country']
-    com.pincode = request.POST['pincode']
-
-    t = request.POST['select']
-    terms = payment_terms.objects.get(id=t)
-    com.dateperiod = terms
-    com.start_date=date.today()
-    days=int(terms.days)
-
-    end= date.today() + timedelta(days=days)
-    com.End_date=end
-
-    old=com.profile_pic
-    new=request.FILES.get('image')
-    if old!=None and new==None:
-      com.profile_pic=old
-    else:
-      com.profile_pic=new
-    
-    com.save() 
-    com.user.save() 
-    return redirect('Companyprofile') 
 
 
 
-  return redirect('Companyprofile')
-
-def editmodule(request):
-  com =  company.objects.get(user = request.user)
-  allmodules= modules_list.objects.get(company=com.id,status='New')
-  return render(request,'company/editmodule.html',{'company':com,'allmodules':allmodules})
-
-def editmodule_action(request):
-  if request.method == 'POST':
-    com = company.objects.get(user = request.user)
-    # if modules_list.objects.filter(company=com.id,status='Old').exists():
-    #   old=modules_list.objects.filter(company=com.id,status='Old')
-    #   old.delete()
-
-    # old_data=modules_list.objects.get(company=com.id,status='New')  
-    # old_data.status='Old'
-    # old_data.save()
-
-
-
-    c1=request.POST.get('c1')
-    c2=request.POST.get('c2')
-    c3=request.POST.get('c3')
-    c4=request.POST.get('c4')
-    c5=request.POST.get('c5')
-    c6=request.POST.get('c6')
-    c7=request.POST.get('c7')
-    c8=request.POST.get('c8')
-    c9=request.POST.get('c9')
-    c10=request.POST.get('c10')
-    c11=request.POST.get('c11')
-    c12=request.POST.get('c12')
-    c13=request.POST.get('c13')
-    c14=request.POST.get('c14')
-    
-    data=modules_list(company=com,sales_invoice = c1,
-                      Estimate=c2,Payment_in=c3,sales_order=c4,
-                      Delivery_challan=c5,sales_return=c6,Purchase_bills=c7,
-                      Payment_out=c8,Purchase_order=c9,Purchase_return=c10,
-                      Bank_account=c11,Cash_in_hand=c12, cheques=c13,Loan_account=c14,status='Pending')
-    data.save()
-    data1=modules_list.objects.filter(company=com.id,status='Pending').update(update_action=1)
-    return redirect('Companyprofile')
-    
-    
-  return redirect('Companyprofile')
 
 def admin_notification(request):
   data= modules_list.objects.filter(update_action=1,status='Pending')
@@ -431,45 +345,7 @@ def module_updation_ok(request,mid):
   data1=modules_list.objects.filter(company=mid).update(update_action=0)
   return redirect('admin_notification')
 
-def staff_profile(request,sid):
-  staff =  staff_details.objects.get(id=sid)
-  allmodules= modules_list.objects.get(company=staff.company,status='New')
-  context = {
-              'staff' : staff,
-              'allmodules':allmodules
 
-          }
-  return render(request,'staff/staff_profile.html',context)
-
-def editstaff_profile(request,sid):
-  staff =  staff_details.objects.get(id=sid)
-  allmodules= modules_list.objects.get(company=staff.company,status='New')
-  context = {
-              'staff' : staff,
-              'allmodules':allmodules
-
-          }
-  return render(request,'staff/editstaff_profile.html',context)
-
-def editstaff_profile_action(request,sid):
-  if request.method == 'POST':
-    staff =  staff_details.objects.get(id=sid)
-    staff.first_name = request.POST['fname']
-    staff.last_name = request.POST['lname']
-    staff.user_name = request.POST['uname']
-    staff.email = request.POST['email']
-    staff.contact = request.POST['ph']
-    old=staff.img
-    new=request.FILES.get('image')
-    if old!=None and new==None:
-      staff.img=old
-    else:
-      staff.img=new
-
-    staff.save()  
-
-    return redirect ('staff_profile',staff.id)
-  return redirect ('staff_profile',staff.id)
 
 
 
@@ -584,11 +460,7 @@ def distributor_accept_company(request,id):
   data=company.objects.filter(id=id).update(Distributor_approval=1)
   
   return redirect('dcompany_request')
-def distributor_reject_company(request,id):
-  data=company.objects.get(id=id)
-  data.user.delete()
-  data.delete()
-  return redirect('dcompany_request')
+
 
 def dcompany_details(request):
   distributor =  Distributors_details.objects.get(user = request.user)
@@ -925,61 +797,13 @@ def add_parties(request):
   return render(request, 'company/add_parties.html')
 
 
-def save_parties(request):
-    if request.method == 'POST':
-        Company = company.objects.get(user=request.user)
-        user_id = request.user.id
-        
-        party_name = request.POST['partyname']
-        gst_no = request.POST['gstno']
-        contact = request.POST['contact']
-        gst_type = request.POST['gst']
-        state = request.POST['state']
-        address = request.POST['address']
-        email = request.POST['email']
-        openingbalance = request.POST.get('balance', '')
-        payment = request.POST.get('paymentType', '')
-        creditlimit = request.POST.get('creditlimit', '')
-        current_date = request.POST['currentdate']
-        End_date = request.POST.get('enddate', None)
-        additionalfield1 = request.POST['additionalfield1']
-        additionalfield2 = request.POST['additionalfield2']
-        additionalfield3 = request.POST['additionalfield3']
-        user=User.objects.get(id=user_id)
-        comp=Company
-        if (
-          not party_name
-          
-      ):
-          return render(request, 'add_parties.html')
-
-        part = party(party_name=party_name, gst_no=gst_no,contact=contact,gst_type=gst_type, state=state,address=address, email=email, openingbalance=openingbalance,payment=payment,
-                       creditlimit=creditlimit,current_date=current_date,End_date=End_date,additionalfield1=additionalfield1,additionalfield2=additionalfield2,additionalfield3=additionalfield3,user=user,company=comp)
-        part.save() 
-
-        if 'save_and_new' in request.POST:
-            
-            return render(request, 'company/add_parties.html')
-        else:
-          
-            return redirect('view_parties')
-
-    return render(request, 'company/add_parties.html')  
 
 
-def view_parties(request):
-  Company = company.objects.get(user=request.user.id)
-  user_id = request.user.id
-  Party=party.objects.filter(company=Company.id)
-  return render(request, 'company/view_parties.html',{'Company':Company,'user_id':user_id,'Party':Party})
 
 
-def view_party(request,id):
-  Company = company.objects.get(user=request.user)
-  user_id = request.user.id
-  getparty=party.objects.get(id=id)
-  Party=party.objects.filter(company=Company.id)
-  return render(request, 'company/view_party.html',{'Company':Company,'user_id':user_id,'Party':Party,'getparty':getparty})
+
+
+
 
 def edit_party(request,id):
   Company = company.objects.get(user=request.user)
@@ -4639,6 +4463,252 @@ def Companyprofile(request):
   allmodules= modules_list.objects.get(company=staff.company.id,status='New')
   return render(request,'company/companyprofile.html',{'staff':staff,'allmodules':allmodules})
 
+def editcompanyprofile(request):
+  staff_id = request.session['staff_id']
+  print(staff_id)    
+  staff =  staff_details.objects.get(id = staff_id)
+  allmodules= modules_list.objects.get(company=staff.company.id,status='New')
+  terms=payment_terms.objects.all()
+  return render(request,'company/editcompanyprofile.html',{'staff':staff,'allmodules':allmodules,'terms':terms})
+
+def editcompanyprofile_action(request):
+  staff_id = request.session['staff_id']
+  print(staff_id) 
+  staff =  staff_details.objects.get(id = staff_id)
+ 
+  if request.method == 'POST':
+    staff.company.company_name = request.POST['cname']
+    staff.company.user.email = request.POST['email']
+
+    staff.email = request.POST['email']
+
+    staff.company.contact = request.POST['ph']
+
+    staff.contact = request.POST['ph']
+
+    staff.company.address = request.POST['address']
+    staff.company.city = request.POST['city']
+    staff.company.state = request.POST['state']
+    staff.company.country = request.POST['country']
+    staff.company.pincode = request.POST['pincode']
+
+    t = request.POST['select']
+    terms = payment_terms.objects.get(id=t)
+    staff.company.dateperiod = terms
+    staff.company.start_date=date.today()
+    days=int(terms.days)
+
+    end= date.today() + timedelta(days=days)
+    staff.company.End_date=end
+
+    old=staff.company.profile_pic
+    new=request.FILES.get('image')
+    if old!=None and new==None:
+      staff.company.profile_pic=old
+    else:
+      staff.company.profile_pic=new
+    
+    staff.company.save() 
+    staff.company.user.save() 
+    staff.save()
+    return redirect('Companyprofile') 
 
 
+
+  return redirect('Companyprofile')
+
+
+def editmodule(request):
+  staff_id = request.session['staff_id']
+  print(staff_id) 
+  staff =  staff_details.objects.get(id = staff_id)
+  allmodules= modules_list.objects.get(company=staff.company.id,status='New')
+  return render(request,'company/editmodule.html',{'staff':staff,'allmodules':allmodules})
+
+def editmodule_action(request):
+  if request.method == 'POST':
+    staff_id = request.session['staff_id']
+    print(staff_id) 
+    staff =  staff_details.objects.get(id = staff_id)
+    com = company.objects.get(id = staff.company.id)
+    # if modules_list.objects.filter(company=com.id,status='Old').exists():
+    #   old=modules_list.objects.filter(company=com.id,status='Old')
+    #   old.delete()
+
+    # old_data=modules_list.objects.get(company=com.id,status='New')  
+    # old_data.status='Old'
+    # old_data.save()
+
+
+
+    c1=request.POST.get('c1')
+    c2=request.POST.get('c2')
+    c3=request.POST.get('c3')
+    c4=request.POST.get('c4')
+    c5=request.POST.get('c5')
+    c6=request.POST.get('c6')
+    c7=request.POST.get('c7')
+    c8=request.POST.get('c8')
+    c9=request.POST.get('c9')
+    c10=request.POST.get('c10')
+    c11=request.POST.get('c11')
+    c12=request.POST.get('c12')
+    c13=request.POST.get('c13')
+    c14=request.POST.get('c14')
+    c15=request.POST.get('c15')
+    
+    data=modules_list(company=com,sales_invoice = c1,
+                      Estimate=c2,Payment_in=c3,sales_order=c4,
+                      Delivery_challan=c5,sales_return=c6,Purchase_bills=c7,
+                      Payment_out=c8,Purchase_order=c9,Purchase_return=c10,
+                      Bank_account=c11,Cash_in_hand=c12, cheques=c13,Loan_account=c14,Upi=c15,status='Pending')
+    data.save()
+    data1=modules_list.objects.filter(company=com.id,status='Pending').update(update_action=1)
+    return redirect('Companyprofile')
+    
+    
+  return redirect('Companyprofile')
+
+
+def companyreport(request):
+  staff_id = request.session['staff_id']
+  print(staff_id) 
+  staff =  staff_details.objects.get(id = staff_id)
+  allmodules= modules_list.objects.get(company=staff.company.id,status='New')
+  return render(request,'company/companyreport.html',{'staff':staff,'allmodules':allmodules}) 
+
+
+
+
+
+def staff_profile(request):
+  staff_id = request.session['staff_id']
+  staff =  staff_details.objects.get(id=staff_id)
+  allmodules= modules_list.objects.get(company=staff.company.id,status='New')
+  context = {
+              'staff' : staff,
+              'allmodules':allmodules
+
+          }
+  return render(request,'staff/staff_profile.html',context)
+
+def editstaff_profile(request):
+  staff_id = request.session['staff_id']
+  staff =  staff_details.objects.get(id=staff_id)
+  allmodules= modules_list.objects.get(company=staff.company,status='New')
+  context = {
+              'staff' : staff,
+              'allmodules':allmodules
+
+          }
+  return render(request,'staff/editstaff_profile.html',context)
+
+def editstaff_profile_action(request):
+  if request.method == 'POST':
+    staff_id = request.session['staff_id']
+    staff =  staff_details.objects.get(id=staff_id)
+    staff.first_name = request.POST['fname']
+    staff.last_name = request.POST['lname']
+    staff.user_name = request.POST['uname']
+    staff.email = request.POST['email']
+    staff.contact = request.POST['ph']
+    old=staff.img
+    new=request.FILES.get('image')
+    if old!=None and new==None:
+      staff.img=old
+    else:
+      staff.img=new
+
+    staff.save()  
+
+    return redirect ('staff_profile')
+  return redirect ('staff_profile')
+
+def view_parties(request):
+  staff_id = request.session['staff_id']
+  staff =  staff_details.objects.get(id=staff_id)
+  
+ 
+  Party=party.objects.filter(company=staff.company.id)
+  allmodules= modules_list.objects.get(company=staff.company,status='New')
+  return render(request, 'company/view_parties.html',{'staff':staff,'allmodules':allmodules,'Party':Party})
+
+def save_parties(request):
+    if request.method == 'POST':
+        staff_id = request.session['staff_id']
+        staff =  staff_details.objects.get(id=staff_id)
+        
+        party_name = request.POST['partyname']
+        gst_no = request.POST['gstno']
+        contact = request.POST['contact']
+        gst_type = request.POST['gst']
+        state = request.POST['state']
+        address = request.POST['address']
+        email = request.POST['email']
+        openingbalance = request.POST.get('balance', '')
+        payment = request.POST.get('paymentType', '')
+        creditlimit = request.POST.get('creditlimit', '')
+        current_date = request.POST['currentdate']
+        End_date = request.POST.get('enddate', None)
+        additionalfield1 = request.POST['additionalfield1']
+        additionalfield2 = request.POST['additionalfield2']
+        additionalfield3 = request.POST['additionalfield3']
+       
+        if (
+          not party_name
+          
+      ):
+          return render(request, 'add_parties.html')
+
+        part = party(party_name=party_name, gst_no=gst_no,contact=contact,gst_type=gst_type, state=state,address=address, email=email, openingbalance=openingbalance,payment=payment,
+                       creditlimit=creditlimit,current_date=current_date,End_date=End_date,additionalfield1=additionalfield1,additionalfield2=additionalfield2,additionalfield3=additionalfield3,user=staff.company.user,company=staff.company)
+        part.save() 
+
+        if 'save_and_new' in request.POST:
+            
+            return render(request, 'company/add_parties.html')
+        else:
+          
+            return redirect('view_parties')
+
+    return render(request, 'company/add_parties.html')  
+
+def view_party(request,id):
+  staff_id = request.session['staff_id']
+  staff =  staff_details.objects.get(id=staff_id)
+  getparty=party.objects.get(id=id)
+  Party=party.objects.filter(company=staff.company.id)
+  allmodules= modules_list.objects.get(company=staff.company,status='New')
+  return render(request, 'company/view_party.html',{'staff':staff,'allmodules':allmodules,'Party':Party,'getparty':getparty})
+
+def distributor_reject_company(request,id):
+  data1=staff_details.objects.get(company=id,position='company')
+  data1.delete()
+  data=company.objects.get(id=id)
+  data.user.delete()
+  data.delete()
+  return redirect('dcompany_request')
+
+def distributor_notification(request):
+  distributor =  Distributors_details.objects.get(user = request.user)
+  data= modules_list.objects.filter(update_action=1,status='Pending',company__reg_action='distributor',company__Distributors=distributor.id)
+  return render(request,'distributor/distributor_notification.html',{'distributor':distributor,'data':data})
+
+def distributor_module_updation(request,mid):
+  distributor =  Distributors_details.objects.get(user = request.user)
+  data= modules_list.objects.get(id=mid)
+  allmodules= modules_list.objects.get(company=data.company,status='Pending')
+  old_modules = modules_list.objects.get(company=data.company,status='New')
+  return render(request,'distributor/distributor_module_updation.html',{'distributor':distributor,'data':data,'allmodules':allmodules,'old_modules':old_modules})
+
+def distributor_module_updation_ok(request,mid):
+  
+  old=modules_list.objects.get(company=mid,status='New')
+  old.delete()
+
+  data=modules_list.objects.get(company=mid,status='Pending')  
+  data.status='New'
+  data.save()
+  data1=modules_list.objects.filter(company=mid).update(update_action=0)
+  return redirect('distributor_notification')
     

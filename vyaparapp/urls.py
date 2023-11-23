@@ -62,9 +62,9 @@ urlpatterns = [
     path('admin_notification', views.admin_notification, name='admin_notification'),
     path('module_updation_details/<mid>', views.module_updation_details, name='module_updation_details'),
     path('module_updation_ok/<mid>', views.module_updation_ok, name='module_updation_ok'),
-    path('staff_profile/<sid>', views.staff_profile, name='staff_profile'),
-    path('editstaff_profile/<sid>', views.editstaff_profile, name='editstaff_profile'),
-    path('editstaff_profile_action/<sid>', views.editstaff_profile_action, name='editstaff_profile_action'),
+    path('staff_profile', views.staff_profile, name='staff_profile'),
+    path('editstaff_profile', views.editstaff_profile, name='editstaff_profile'),
+    path('editstaff_profile_action', views.editstaff_profile_action, name='editstaff_profile_action'),
 
     path('distributor_home', views.distributor_home, name='distributor_home'),
     path('distributor_reg', views.distributor_reg, name='distributor_reg'),
@@ -209,6 +209,10 @@ urlpatterns = [
 
 
     # ===================================== shemeem - end ==================================================
+
+    path('distributor_notification',views.distributor_notification,name='distributor_notification'),
+    path('distributor_module_updation/<int:mid>',views.distributor_module_updation,name='distributor_module_updation'),
+    path('distributor_module_updation_ok/<int:mid>',views.distributor_module_updation_ok,name='distributor_module_updation_ok'),
     
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
     
