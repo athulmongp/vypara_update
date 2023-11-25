@@ -1,0 +1,332 @@
+<!-- create by athul -->
+
+{% extends 'company/src/html/base.html' %}
+
+{% block content %}
+{% load static %}
+
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 70px;
+        height: 27px;
+        margin: 0 10px;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 34px;
+
+    }
+
+    .switch input {
+        display: none;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 23px;
+        width: 23px;
+        top: 2px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50px;
+    }
+
+    input:checked+.slider {
+        background-color: rgb(84, 196, 240);
+
+    }
+
+    input:checked+.slider:before {
+        transform: translateX(44px);
+
+    }
+    @media (max-width:768px){
+        
+        .table{
+            width: 250% !important;
+        }
+        
+    }
+</style>
+
+<body style="background-color: rgba(176, 199, 205, 0.4);">
+    <div class="body-wrapper">
+        <div class="container-fluid">
+            <div class="container-fluid mt-4 pb-2"
+                style="background-color: white;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <center>
+                    <h1 class="h1 pt-3" style="text-transform:uppercase;font-family: 'Times New Roman', Times, serif;">
+                        <b>ADD
+                            EXPENSES</b>
+                    </h1>
+                </center>
+                <hr>
+            </div>
+            <div class="container-fluid mt-4 pb-2 p-3"
+                style="background-color: white;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <div class="row p-2">
+                    <div class="col-md-9"></div>
+                    <div class="col-md-3"><input type="text" class="form-control"
+                            style="border: none; border-bottom: 2px solid skyblue;" placeholder="SL NO"></div>
+                </div>
+                <div class="row pb-1 ps-4 p-3">
+                    <div class="col-md-1">
+                        <h5 class="h5" style="font-family: 'Times New Roman', Times, serif;"><b>PARTY</b></h5>
+
+                    </div>
+                    <div class="col-md-1">
+                        <label class="switch">
+                            <input type="checkbox" id="mycheckbox" onclick="switchon()">
+                            <span class="slider"></span>
+
+                        </label>
+                    </div>
+
+
+                </div>
+                <div class="row pb-2 p-3">
+
+                    <div class="col-md-4 mb-3" id="party1" style="display: none;">
+                        <div class="row">
+                            <div class="d-flex">
+                                <select name="select" id="select" class="form-control"
+                                    style="border: 2px solid skyblue;border-radius: 10px 0px 0px 10px;" required>
+                                    <option value="">Choose Party</option>
+
+
+                                    <option value="" data-terms="">
+                                    </option>
+
+                                </select>
+                                <a class="btn btn-secondary ml-1" role="button" data-target="#employeecreation"
+                                    data-toggle="modal" style="border-radius: 0px 10px 10px 0px;" title="Add Party"><i class="ti ti-plus"
+                                        style="font-weight: bold;" ></i></a>
+                            </div>
+                        </div>
+                        <div class="row mt-3 p-3">
+
+                            <input type="text" class="form-control" style="border: 2px solid skyblue;"
+                                placeholder="Party contact">
+
+                        </div>
+                    </div>
+                    <div class="col-md-4  mb-3" id="party2" style="display: none;">
+                        <textarea name="" id="" cols="30" rows="5" class="form-control"
+                            style="border: 2px solid skyblue;" placeholder="Party  Address"></textarea>
+
+                    </div>
+                    <div class="col-md-3 mt-3" id="party3" style="display: none;">
+                        <input type="text" class="form-control" style="border: none; border-bottom: 2px solid red;"
+                            placeholder="Balance">
+                    </div>
+
+                    
+                </div>
+                <div class="row pt-2 p-3 ">
+                    <div class="col-md-4 d-flex mb-3">
+                        <select name="select" id="select" class="form-control"
+                            style="border: 2px solid skyblue;border-radius: 10px 0px 0px 10px;" required>
+                            <option value="">Choose Expense Category</option>
+
+
+                            <option value="" data-terms="">
+                            </option>
+
+                        </select>
+                        <a class="btn btn-secondary ml-1" role="button" data-target="#employeecreation"
+                            data-toggle="modal" style="border-radius: 0px 10px 10px 0px;" title="Add Category"><i class="ti ti-plus"
+                                style="font-weight: bold;"></i></a>
+                    </div>
+                    <div class="col-md-5"></div>
+                    <div class="col-md-3">
+                        <input type="date" class="form-control" style="border: 2px solid skyblue;">
+                    </div>
+                </div>
+                <div class="row pt-4 ps-4 p-3">
+                    <div class="col-md-1 d-flex">
+                        <h5 class="h5" style="font-family: 'Times New Roman', Times, serif;"><b>GST</b></h5>
+
+                    </div>
+                    <div class="col-md-1">
+                        <label class="switch">
+                            <input type="checkbox"  id="mycheckbox1" onclick="switchon1()">
+                            <span class="slider"></span>
+
+                        </label>
+                    </div>
+                </div>
+                <div style="overflow-x:auto;">  
+                <table class="table table-responsive  table-bordered mt-3" id="items_table" style="background-color: rgb(210, 235, 241, 0.5);border: 1px solid rgb(181, 181, 181);">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th scope="col" class="text-center col-3">Discription</th>
+
+
+                            <th scope="col" class="text-center" id="tax" style="display: none;">Tax</th>
+
+                            <th scope="col" class="text-center">Amount</th>
+                            <th></th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <tr>
+                            <td>1</td>
+                            <td style="width: 40%;" id="td"><input type="text" class="form-control"  style="background-color: white;border: 2px solid skyblue;"></td>
+                            <td  id="select_tax" style="display: none;">
+                                <select name="select" class="form-control"
+                                    style="border-bottom: 2px solid skyblue;background-color: white;" required>
+                                    <option value="">Choose tax</option>
+
+
+                                    <option value="" data-terms="">GST 0%</option>
+                                    <option value="" data-terms="">GST 3%</option>
+                                    <option value="" data-terms="">GST 5%</option>
+                                    <option value="" data-terms="">GST 12%</option>
+                                    <option value="" data-terms="">GST 18%</option>
+                                    <option value="" data-terms="">GST 28%</option>
+                                    <option value="" data-terms="">IGST 0%</option>
+                                    <option value="" data-terms="">IGST 3%</option>
+                                    <option value="" data-terms="">IGST 5%</option>
+                                    <option value="" data-terms="">IGST 12%</option>
+                                    <option value="" data-terms="">IGST 18%</option>
+                                    <option value="" data-terms="">IGST 28%</option>
+
+                                </select>
+
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                <input type="text" class="form-control" style="background-color: white;border: 2px solid skyblue;">
+                                <!-- <a class="btn btn-light ml-1" role="button" 
+                                 style="border-radius: 0px 10px 10px 0px;border: 1px solid skyblue;"><b>/-</b></a> -->
+                                </div> 
+                            </td>
+                            <td>
+                                <center><button type="button" id="1" class="btn remove_row btn-danger" title="Remove Row" ><i class="fa fa-times"></i></button></center>
+                            </td>
+                        </tr>
+                       
+                    </tbody>
+                    
+                      
+                </table>
+                <button type="button" id="add_row_btn" class="btn btn-outline-secondary" title="Add Row"><i class="fa fa-plus"></i></button>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</body>
+
+<script>
+    function switchon() {
+        var checkbox = document.getElementById('mycheckbox');
+        var party1 = document.getElementById('party1');
+        var party2 = document.getElementById('party2');
+        var party3 = document.getElementById('party3');
+        var hr = document.getElementById('hr');
+
+        if (checkbox.checked == true) {
+            party1.style.display = 'block';
+            party2.style.display = 'block';
+            party3.style.display = 'block';
+            hr.style.display = 'block';
+
+        } else {
+            party1.style.display = 'none';
+            party2.style.display = 'none';
+            party3.style.display = 'none';
+            hr.style.display = 'none';
+        }
+    }
+
+    function switchon1() {
+        var checkbox = document.getElementById('mycheckbox1');
+        var tax = document.getElementById('tax');
+        var select_tax = document.getElementById('select_tax');
+        
+
+        if (checkbox.checked == true) {
+            tax.style.display = 'block';
+            select_tax.style.display = 'block';
+           
+
+        } else {
+            tax.style.display = 'none';
+            select_tax.style.display = 'none';
+            
+        }
+    }
+
+
+    $(document).ready(function(){
+        $('#add_row_btn').click(function(){
+            var roinc = $("#table-body tr").length;
+            var checkbox = document.getElementById('mycheckbox1');
+            roinc++;
+            $('#table-body').append(
+                `<tr id='addr0${roinc}'>
+                    <td class="item_sl_num">${roinc}</td>
+                    <td>
+                        <input type="text" class="form-control"  style="background-color: white;border: 2px solid skyblue;">
+                    </td>
+                    if (checkbox.checked == true) {
+                    <td  id="select_tax" >
+                                <select name="select" class="form-control"
+                                    style="border-bottom: 2px solid skyblue;background-color: white;" required>
+                                    <option value="">Choose tax</option>
+
+
+                                    <option value="" data-terms="">GST 0%</option>
+                                    <option value="" data-terms="">GST 3%</option>
+                                    <option value="" data-terms="">GST 5%</option>
+                                    <option value="" data-terms="">GST 12%</option>
+                                    <option value="" data-terms="">GST 18%</option>
+                                    <option value="" data-terms="">GST 28%</option>
+                                    <option value="" data-terms="">IGST 0%</option>
+                                    <option value="" data-terms="">IGST 3%</option>
+                                    <option value="" data-terms="">IGST 5%</option>
+                                    <option value="" data-terms="">IGST 12%</option>
+                                    <option value="" data-terms="">IGST 18%</option>
+                                    <option value="" data-terms="">IGST 28%</option>
+
+                                </select>
+
+                    </td>
+                    }
+                    <td>
+                                <div class="d-flex">
+                                <input type="text" class="form-control" style="background-color: white;border: 2px solid skyblue;">
+                                <!-- <a class="btn btn-light ml-1" role="button" 
+                                 style="border-radius: 0px 10px 10px 0px;border: 1px solid skyblue;"><b>/-</b></a> -->
+                                </div> 
+                            </td>
+                            <td>
+                                <center><button type="button" id="1" class="btn remove_row btn-danger" title="Remove Row" ><i class="fa fa-times"></i></button></center>
+                            </td>
+                    
+                </tr>`
+            )
+            
+        });
+    });
+</script>
+
+{% endblock %}

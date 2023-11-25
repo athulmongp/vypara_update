@@ -213,6 +213,8 @@ urlpatterns = [
     path('distributor_notification',views.distributor_notification,name='distributor_notification'),
     path('distributor_module_updation/<int:mid>',views.distributor_module_updation,name='distributor_module_updation'),
     path('distributor_module_updation_ok/<int:mid>',views.distributor_module_updation_ok,name='distributor_module_updation_ok'),
+    path('expense',views.expense,name='expense'),
+    path('newexpenses',views.newexpenses,name='newexpenses'),
     
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
     

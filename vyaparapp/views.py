@@ -4711,4 +4711,20 @@ def distributor_module_updation_ok(request,mid):
   data.save()
   data1=modules_list.objects.filter(company=mid).update(update_action=0)
   return redirect('distributor_notification')
+
+def expense(request):
+  staff_id = request.session['staff_id']
+  staff =  staff_details.objects.get(id=staff_id)
+  allmodules= modules_list.objects.get(company=staff.company,status='New')
+  context={'staff':staff,
+           'allmodules':allmodules}
+  return render(request,'company/expense.html',context)
+
+def newexpenses(request):
+  staff_id = request.session['staff_id']
+  staff =  staff_details.objects.get(id=staff_id)
+  allmodules= modules_list.objects.get(company=staff.company,status='New')
+  context={'staff':staff,
+           'allmodules':allmodules}
+  return render(request,'company/newexpenses.html',context)
     
