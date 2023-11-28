@@ -59,12 +59,14 @@
         .table {
             width: 250% !important;
         }
-        #pt{
+
+        #pt {
             padding-bottom: 3px !important;
             margin-bottom: 10px !important;
         }
 
     }
+
 </style>
 
 <body style="background-color: rgba(176, 199, 205, 0.4);">
@@ -107,15 +109,18 @@
                     <div class="col-md-4 mb-3" id="party1" style="display: none;">
                         <div class="row">
                             <div class="d-flex">
-                                <select name="select" id="select" class="form-control"
+                                <select name="select" id="party" class="form-control"
                                     style="border: 2px solid skyblue;border-radius: 10px 0px 0px 10px;" required>
                                     <option value="">Choose Party</option>
+                                    
+                                    {% for p in parties %}
 
-
-                                    <option value="" data-terms="">
-                                    </option>
+                                    <option value="{{p.id}}" data-terms="">{{p.party_name}}</option>
+                                    {% endfor %}
 
                                 </select>
+                                
+                                
                                 <a class="btn btn-secondary ml-1" role="button" data-target="#employeecreation"
                                     data-toggle="modal" style="border-radius: 0px 10px 10px 0px;" title="Add Party"><i
                                         class="ti ti-plus" style="font-weight: bold;"></i></a>
@@ -123,19 +128,19 @@
                         </div>
                         <div class="row mt-3 p-3">
 
-                            <input type="text" class="form-control" style="border: 2px solid skyblue;"
-                                placeholder="Party contact">
+                            <input type="text" id="party_contact" class="form-control"
+                                style="border: 2px solid skyblue;" placeholder="Party contact">
 
                         </div>
                     </div>
-                    <div class="col-md-4  mb-3" id="party2" style="display: none;">
-                        <textarea name="" id="" cols="30" rows="5" class="form-control"
+                    <div class="col-md-4  mb-3" style="display: none;" id="party2">
+                        <textarea name="" cols="30" rows="5" class="form-control" id="party_address"
                             style="border: 2px solid skyblue;" placeholder="Party  Address"></textarea>
 
                     </div>
-                    <div class="col-md-3 mt-3" id="party3" style="display: none;">
+                    <div class="col-md-3 mt-3" style="display: none;" id="party3">
                         <input type="text" class="form-control" style="border: none; border-bottom: 2px solid red;"
-                            placeholder="Balance">
+                            placeholder="Balance" id="party_balance">
                     </div>
 
 
@@ -175,7 +180,8 @@
                 </div>
                 <div style="overflow-x:auto;">
                     <table id="table" class="table table-responsive  table-bordered mt-3" id="items_table"
-                        style="background-color: rgb(210, 235, 241, 0.5);border: 1px solid rgb(181, 181, 181);" onchange="calc()">
+                        style="background-color: rgb(210, 235, 241, 0.5);border: 1px solid rgb(181, 181, 181);"
+                        onchange="calc()">
                         <thead>
                             <tr>
                                 <th class="text-center">#</th>
@@ -189,7 +195,7 @@
 
                             </tr>
                         </thead>
-                        <tbody id="table-body">
+                        <tbody id="dc-items-table-body">
                             <tr id='addr01'>
                                 <td>1</td>
                                 <td style="width: 40%;" id="td"><input type="text" class="form-control"
@@ -218,7 +224,7 @@
                                 </td>
                                 <td>
                                     <div class="d-flex">
-                                        <input type="text" id="amount" class=".amount form-control"
+                                        <input type="text" id="amount1" class="amount form-control"
                                             style="background-color: white;border: 2px solid skyblue;" oninput="calc()">
                                         <!-- <a class="btn btn-light ml-1" role="button" 
                                  style="border-radius: 0px 10px 10px 0px;border: 1px solid skyblue;"><b>/-</b></a> -->
@@ -241,59 +247,93 @@
                 <div class="row p-3 mb-5">
                     <div class="col-md-5 p-5" id="pt">
                         <div class="d-flex">
-                            <select name="" id="paymentType" class="form-control mt-5 mb-5" style="border-radius: 10px 0px 0px 10px;border-bottom: 2px solid skyblue;">
-                                <option value="">Choose   Payment   type.......</option>
+                            <select name="" id="paymentType" class="form-control mt-5 mb-5"
+                                style="border-radius: 10px 0px 0px 10px;border-bottom: 2px solid skyblue;">
+                                <option value="">Choose Payment type.......</option>
                                 <option value="">SBI</option>
                             </select>
                             <a class="btn btn-secondary mt-5 mb-5" role="button" data-target="#employeecreation"
-                                data-toggle="modal" style="border-radius: 0px 10px 10px 0px;" title="Add Payment Type"><i class="ti ti-plus" style="font-weight: bold;"></i></a>
+                                data-toggle="modal" style="border-radius: 0px 10px 10px 0px;"
+                                title="Add Payment Type"><i class="ti ti-plus" style="font-weight: bold;"></i></a>
                         </div>
-                        
+
                     </div>
                     <div class="col"></div>
-                    <div class="col-md-6" style="border-radius: 10px; background-color: rgb(210, 235, 241, 0.5);box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                    <div class="col-md-6"
+                        style="border-radius: 10px; background-color: rgb(210, 235, 241, 0.5);box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                         <div class="row p-2">
                             <div class="col-md-4">Sub Total</div>
-                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text" class="subtotal" id="sub_total" style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; "></div>
+                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text"
+                                    class="subtotal" id="sub_total"
+                                    style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; "
+                                    readonly>
+                            </div>
                         </div>
                         <div class="row p-2">
                             <div class="col-md-4">CGST</div>
-                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text" id="cgst" class="cgst" style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; "></div>
+                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text" id="cgst"
+                                    class="cgst"
+                                    style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; "
+                                    readonly>
+                            </div>
                         </div>
                         <div class="row p-2">
                             <div class="col-md-4">SGST</div>
-                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text" id="sgst" class="sgst" style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; "></div>
+                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text" id="sgst"
+                                    class="sgst"
+                                    style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; "
+                                    readonly>
+                            </div>
                         </div>
                         <div class="row p-2">
                             <div class="col-md-4">Tax Amount</div>
-                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text" class="taxamount" id="tax_amount" style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; "></div>
+                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text"
+                                    class="taxamount" id="tax_amount"
+                                    style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; "
+                                    readonly>
+                            </div>
                         </div>
                         <div class="row p-2">
                             <div class="col-md-4">Adjustmment</div>
-                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text" class="adjustmment" id="adjustmment" style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; "></div>
+                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text"
+                                    class="adjustmment" id="adjustmment" oninput="adjustment()"
+                                    style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; ">
+                            </div>
                         </div>
                         <div class="row p-2">
                             <div class="col-md-4">Total</div>
-                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text" class="total" id="total" style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; "></div>
+                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text" class="total"
+                                    id="total"
+                                    style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; "
+                                    readonly>
+                            </div>
                         </div>
                         <div class="row p-2">
                             <div class="col-md-4">Paid</div>
-                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text" id="paid" style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; "></div>
+                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text" id="paid"
+                                    oninput="paid()"
+                                    style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; ">
+                            </div>
                         </div>
                         <div class="row p-2">
                             <div class="col-md-4">Balance</div>
-                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text" id="balance" style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; "></div>
+                            <div class="col-md-8"><b style="margin-right: 10px;">:</b> <input type="text" id="balance"
+                                    style="border: skyblue; width: 90%;border-bottom: 3px solid skyblue;border-radius: 10px;padding: 5px; "
+                                    readonly>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row p-3">
                     <div class="col-md-2"></div>
-                    
-                    <div class="col-md-8"><center>
-                        <a href="" class="btn btn-secondary"><b>SAVE</b></a>
-                        <a href="" class="btn btn-secondary">SAVE & NEW</a>
-                    </center></div>
-                
+
+                    <div class="col-md-8">
+                        <center>
+                            <a href="" class="btn btn-secondary"><b>SAVE</b></a>
+                            <a href="" class="btn btn-secondary">SAVE & NEW</a>
+                        </center>
+                    </div>
+
                 </div>
             </div>
 
@@ -303,6 +343,55 @@
 </body>
 
 <script>
+
+
+
+
+
+
+
+
+    $(document).on('change', '#party', function () {
+        var party = $('#party').val();
+        $.ajax({
+            type: "GET",
+            url: "{% url 'partydata' %}",
+            data: {
+                id: party
+            },
+            success: function (response) {
+                if (response) {
+                    console.log(response); 
+                    if (response.contact) {
+                        console.log(response.contact);
+                        document.getElementById('party_contact').value = response.contact;
+                    } else {
+                        console.log("contact not found in response.");
+                    }
+                    if (response.address) {
+                        console.log(response.address);
+                        document.getElementById('party_address').value = response.address;
+                    } else {
+                        console.log("Address not found in response.");
+                    }
+                    if (response.openingbalance) {
+                        console.log(response.openingbalance);
+                        document.getElementById('party_balance').value = response.openingbalance;
+                    } else {
+                        console.log("Balance not found in response.");
+                    }
+                    
+                } else {
+                    console.log("Empty response or incorrect data format.");
+                }
+            },
+
+        });
+    });
+
+
+
+
     function switchon() {
         var checkbox = document.getElementById('mycheckbox');
         var party1 = document.getElementById('party1');
@@ -324,52 +413,28 @@
         }
     }
     function switchon1() {
-    var checkbox = document.getElementById('mycheckbox1');
-    var tax = document.getElementById('tax');
-    var roinc = $("#table-body tr").length;
-    var i;
+        var checkbox = document.getElementById('mycheckbox1');
+        var tax = document.getElementById('tax');
+        var roinc = $("#dc-items-table-body tr").length;
+        var i;
 
-    for (i = 1; i <= roinc; i++) {
-        var select_tax = document.getElementById('select_tax'+i);
+        for (i = 1; i <= roinc; i++) {
+            var select_tax = document.getElementById('select_tax' + i);
 
-        if (checkbox.checked == true) {
-            tax.style.display = 'block';
-            if (select_tax+i) {
-                select_tax.style.display = 'block';
-            }
+            if (checkbox.checked == true) {
+                tax.style.display = 'block';
+                if (select_tax + i) {
+                    select_tax.style.display = 'block';
+                }
 
-        } else {
-            tax.style.display = 'none';
-            if (select_tax+i) {
-                select_tax.style.display = 'none';
+            } else {
+                tax.style.display = 'none';
+                if (select_tax + i) {
+                    select_tax.style.display = 'none';
+                }
             }
         }
     }
-}
-
-    // function switchon1() {
-    //     var checkbox = document.getElementById('mycheckbox1');
-    //     var tax = document.getElementById('tax');
-    //     var roinc = $("#table-body tr").length;
-    //     var i;
-    //     for (i in ronic) {
-
-
-    //         var select_tax = document.getElementById('select_tax[i]');
-
-
-    //         if (checkbox.checked == true) {
-    //             tax.style.display = 'block';
-    //             select_tax.style.display = 'block';
-
-
-    //         } else {
-    //             tax.style.display = 'none';
-    //             select_tax.style.display = 'none';
-
-    //         }
-    //     }
-    // }
 
 
     $('#table').on('click', '.remove_row', function () {
@@ -379,11 +444,9 @@
 
 
 
-
-
     $(document).ready(function () {
         $('#add_row_btn').click(function () {
-            var roinc = $("#table-body tr").length;
+            var roinc = $("#dc-items-table-body tr").length;
             var checkbox = document.getElementById('mycheckbox1');
             roinc++;
 
@@ -395,27 +458,27 @@
 
             if (checkbox.checked == true) {
                 html += `<td id="">
-                        <select name="select" id="select_tax${roinc}" class="form-control" style="border-bottom: 2px solid skyblue;background-color: white;" required>
+                        <select name="select" id="select_tax${roinc}" class="tax form-control" style="border-bottom: 2px solid skyblue;background-color: white;"  required>
                             <option value="">Choose tax</option>
-                            <option value="GST 0%" data-terms="">GST 0%</option>
-                                        <option value="GST 3%" data-terms="">GST 3%</option>
-                                        <option value="GST 5%" data-terms="">GST 5%</option>
-                                        <option value="GST 12%" data-terms="">GST 12%</option>
-                                        <option value="GST 18%" data-terms="">GST 18%</option>
-                                        <option value="GST 28%" data-terms="">GST 28%</option>
-                                        <option value="IGST 0%" data-terms="">IGST 0%</option>
-                                        <option value="IGST 3%" data-terms="">IGST 3%</option>
-                                        <option value="IGST 5%" data-terms="">IGST 5%</option>
-                                        <option value="IGST 12%" data-terms="">IGST 12%</option>
-                                        <option value="IGST 18%" data-terms="">IGST 18%</option>
-                                        <option value="IGST 28%" data-terms="">IGST 28%</option>
+                            <option value="0" data-terms="">GST 0%</option>
+                                        <option value="3" data-terms="">GST 3%</option>
+                                        <option value="5" data-terms="">GST 5%</option>
+                                        <option value="12" data-terms="">GST 12%</option>
+                                        <option value="18" data-terms="">GST 18%</option>
+                                        <option value="28" data-terms="">GST 28%</option>
+                                        <option value="0" data-terms="">IGST 0%</option>
+                                        <option value="3" data-terms="">IGST 3%</option>
+                                        <option value="5" data-terms="">IGST 5%</option>
+                                        <option value="12" data-terms="">IGST 12%</option>
+                                        <option value="18" data-terms="">IGST 18%</option>
+                                        <option value="28" data-terms="">IGST 28%</option>
                         </select>
                     </td>`;
             }
 
             html += `<td>
                     <div class="d-flex">
-                        <input type="text" class="form-control" style="background-color: white;border: 2px solid skyblue;">
+                        <input type="text" class="amount form-control" id='amount${roinc}' style="background-color: white;border: 2px solid skyblue;">
                     </div>
                 </td>
                 <td>
@@ -423,57 +486,89 @@
                 </td>
             </tr>`;
 
-            $('#table-body').append(html);
+            $('#dc-items-table-body').append(html);
+
         });
+        ;
     });
 
 
 
 
 
-//     function calc() {
-//     var amount = parseFloat(document.getElementById('amount').value);
-//     console.log(amount)
-//     var tax = parseFloat(document.getElementById('tax').value);
-//     console.log(tax)
+    $('#dc-items-table-body').on('keyup change', function () {
+        calc();
+    });
 
-//     if (!isNaN(amount) && !isNaN(tax)) {
-//         var sub = (amount * tax / 100) + amount;
-//         document.getElementById('sub_total').value = sub.toFixed(2); // Adjust the precision as needed
-//     } else {
-//         // Handle the case where the input is not a valid number
-//         document.getElementById('sub_total').value = 'Invalid Input';
-//     }
-// }    
+    function calc() {
+        var totalSubtotal = 0;
+        $('#dc-items-table-body tr').each(function () {
+            var html = $(this).html();
+            if (html.trim() !== '') {
+                var price = $(this).find('.amount').val();
+                // var price = document.getElementById('amount1').value;
+                console.log(price);
 
-// function calc() {
-//     var amount = document.getElementById('amount').value;
-//     console.log(amount)
-//     var tax =document.getElementById('tax').value;
-//     console.log(tax)
-//     var sub= (amount*tax / 100) + amount;
-//     document.getElementById('sub_total').value=sub;
-// }
-    
-function calc() {
-    var amount = parseFloat(document.getElementById('amount').value);
-    console.log(amount);
+                var tax = $(this).find('.tax').val();
+                console.log(tax);
 
-    var taxSelect = document.getElementById('tax');
-    var selectedIndex = taxSelect.selectedIndex;
-    var taxValue = parseFloat(taxSelect.value);
-    console.log(taxValue);
+                if (price !== undefined && tax !== undefined && !isNaN(price) && !isNaN(tax)) {
 
-    if (selectedIndex === 0 || isNaN(taxValue)) {
-        document.getElementById('sub_total').value = 'Please select a valid tax';
-    } else if (!isNaN(amount)) {
-        var sub = (amount * taxValue / 100) + amount;
-        document.getElementById('sub_total').value = sub.toFixed(2); // Adjust the precision as needed
-    } else {
-        // Handle the case where the input is not a valid number
-        document.getElementById('sub_total').value = 'Invalid Input';
+                    var subtotal = parseFloat(price);
+                    console.log(subtotal); // Ensure subtotal is a valid number
+
+                    // Accumulate subtotals
+                    totalSubtotal += subtotal;
+
+                    // Display the cumulative subtotal in the 'sub_total' field
+                    document.getElementById('sub_total').value = totalSubtotal.toFixed(2);
+
+                    // Calculate tax amount using parseFloat for numeric operations
+                    var taxAmount = parseFloat(price) * (parseFloat(tax) / 100);
+                    console.log(taxAmount); // Ensure taxAmount is a valid number
+                    document.getElementById('tax_amount').value = taxAmount;
+                    // $(this).find('.taxamount').val(taxAmount);
+                    calc_total();
+                }
+            }
+        });
     }
-}
+
+    function calc_total() {
+        var total = 0; // Declare variables with var, let, or const
+        $('.subtotal').each(function () {
+            total += parseFloat($(this).val());
+        });
+
+        var taxamount = 0; // Declare variables with var, let, or const
+        $('.taxamount').each(function () {
+            taxamount += parseFloat($(this).val());
+        });
+
+        $('#sub_total').val(total.toFixed(2));
+        $('#cgst').val((taxamount / 2).toFixed(2));
+        $('#sgst').val((taxamount / 2).toFixed(2));
+        $('#tax_amount').val(taxamount.toFixed(2));
+
+        var adj = parseFloat($("#adjustment").val()) || 0;
+        var gtot = taxamount + total + adj;
+        $('#total').val(gtot.toFixed(2));
+    }
+    function adjustment() {
+
+        var subtot = parseFloat($('#sub_total').val());
+        if (subtot != 0.0) {
+            var tax = parseFloat($('#tax_amount').val()) || 0;
+            var ad = parseFloat($("#adjustmment").val()) || 0;
+            $('#total').val((subtot + tax + ad).toFixed(2)); // Fixed the calculation
+        }
+
+    }
+    function paid() {
+        var tot = parseFloat($('#total').val())
+        var pa = parseFloat($('#paid').val())
+        $('#balance').val((tot - pa).toFixed(2));
+    }
 </script>
 
 {% endblock %}

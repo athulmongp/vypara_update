@@ -4724,7 +4724,16 @@ def newexpenses(request):
   staff_id = request.session['staff_id']
   staff =  staff_details.objects.get(id=staff_id)
   allmodules= modules_list.objects.get(company=staff.company,status='New')
+  parties=party.objects.filter(company=staff.company)
   context={'staff':staff,
-           'allmodules':allmodules}
+           'allmodules':allmodules,
+           'parties':parties}
   return render(request,'company/newexpenses.html',context)
+
+    
+def partydata(request):
+    party_id = request.GET.get('id')
+    p = party.objects.get(id=party_id)
+    data7 = {'email': p.email,'openingbalance':p.openingbalance,'address':p.address,'contact':p.contact}
+    return JsonResponse(data7)
     
